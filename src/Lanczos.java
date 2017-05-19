@@ -1,13 +1,15 @@
 import org.apache.commons.math3.linear.*;
+import org.apache.commons.math3.random.UnitSphereRandomVectorGenerator;
 
 
 public class Lanczos {
     public static void main(String[] args) {
         double[][] a = new double[][] {{1, 2, 3}, {1, 4, 7}, {2, 1, 3}};
-        int m = 3;
 
-        double[][] t = getTridiagonalMatrix(a, m);
-        printMatrix(t);
+        printMatrix(getTridiagonalMatrix(a, 2));
+        System.out.println();
+
+        printMatrix(getTridiagonalMatrix(a, 3));
     }
 
 
@@ -17,8 +19,10 @@ public class Lanczos {
 
         int n = a.length;
 
+        UnitSphereRandomVectorGenerator uvg = new UnitSphereRandomVectorGenerator(n);
+
         RealVector v0 = new ArrayRealVector(n);
-        RealVector v1 = new ArrayRealVector(n, 1.0);
+        RealVector v1 = new ArrayRealVector(uvg.nextVector());
 
         RealVector wx = new ArrayRealVector(n);
         RealVector w = new ArrayRealVector(n);
